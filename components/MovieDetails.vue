@@ -1,0 +1,96 @@
+<template>
+    <div>
+        <NuxtLink :to="`/`">
+            <button class="btn">Back</button>
+        </NuxtLink>
+
+        <div class="card">
+            <div class="saw">
+                <div class="imgblock">
+                    <img :src=image>
+                </div>
+                <div class="des" >
+                    <h1>{{movie.original_title}}</h1>
+                    <h2>Tagline:</h2>
+                    <p>Status: {{ movie.status }}</p>
+                    <p>Released: {{ movie.release_date }}</p>
+                    <p>Budget: {{ movie.budget }}</p>
+                    <p>Language: {{ movie.original_language }}</p>
+                    <p>Popularity: {{ movie.popularity }}</p>
+                    <p>Runtime: {{ movie.runtime }} min</p>
+                    <p class="overview" style="font-size: 1.3rem;">{{ movie.overview }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+useHead({
+    title:'Movie Details'
+})
+
+const { movie } = defineProps(['movie'])
+
+let image = `https://image.tmdb.org/t/p/w500//${ movie.backdrop_path}`;
+
+
+</script>
+
+<style scoped>
+    .v-application {
+    background-color: #00a86b;
+    }
+    .btn{
+        background-color: #ff4500;
+        color:white;
+        border: 1px solid #ff4500;
+        padding: 8px 12px;
+        cursor: pointer;
+        margin-left: 5vw;
+        margin-top: 1vw;
+        border-radius: 8px;
+    }
+    .imgblock{
+        width: 80%;
+    }
+    img{
+        width: 100%;
+        height: 100%;
+    }
+    img:hover{
+        transform: scale(1.1);
+    }
+    .saw{
+        display: inline-flex;
+        margin-top: 5vw;
+        margin:5vw;
+    }
+
+    .des{
+        padding: 3vw;
+        text-align: left;
+        background-color: black;
+    }
+    h1{
+        font-weight: bolder;
+        font-size: 3em;
+        color: #ff4500;
+    }
+    h2{
+        font-weight: bold;
+        font-size: 1.8em;
+        color: white;
+    }
+
+    .overview{
+        color:white;
+    }
+
+    p{
+        color: aliceblue;
+        display: block;
+        margin:1em
+    }
+
+</style>
