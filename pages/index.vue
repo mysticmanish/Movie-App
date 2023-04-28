@@ -9,9 +9,10 @@
                     v-model="keyword"
                     class="searchInput" 
                     placeholder="Enter movie name" 
+                    @keyup=searchController()
                 />
 
-                <button class="btn" @click="changeToOne();searchMovies()"> Search</button>
+                <button class="btn" @click="searchController()"> Search</button>
 
             </div>
             <div style="padding-top:1.5vw" >
@@ -62,6 +63,15 @@ function decrement(){
         }else{
             getNowMovies()
         }
+    }
+}
+
+function searchController(){
+    if(keyword.value == ''){
+        getNowMovies()
+    }else{
+        changeToOne();
+        searchMovies();
     }
 }
 
