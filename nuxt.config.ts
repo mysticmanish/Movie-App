@@ -8,12 +8,13 @@ export default defineNuxtConfig({
                 {name: 'description', content: 'app'}
             ],
             link: [
-                {rel:'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons'},
+                {rel:'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons'}
                 
             ],
             bodyAttrs: {
                 style: "width: 100%; background-color: black"
               }
+              
         }
     }
 

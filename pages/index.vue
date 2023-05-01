@@ -16,13 +16,14 @@
 
             </div>
             <div style="padding-top:1.5vw" >
-                <button class="navbtn" @click="decrement">
-                    <i class="material-icons" style="padding:5px 0px">keyboard_double_arrow_left</i>
-                </button>
-                <span class="pg"> {{ page }} </span>
-                <button class="navbtn" @click="increment">
-                    <i class="material-icons" style="padding:5px 0px">keyboard_double_arrow_right</i>
-                </button>
+                <i class="material-icons navbtn" style="padding:5px 0px" @click="decrement" >keyboard_double_arrow_left</i>
+                <span class="pg" style="font-size: 2em;"> {{ page }} </span>
+                <i 
+                    class="material-icons navbtn" 
+                    style="padding:5px 0px" 
+                    @click="increment"
+                    :class="totalItems < 20 ? 'disable' : ''"
+                >keyboard_double_arrow_right</i>
             </div>
         </div>
 
@@ -43,6 +44,8 @@ let result = ref({});
 let movies = ref([]);
 let keyword = ref('');
 let hit = false;
+let totalItems = ref();
+let isDisabled = ref(false);
 
 let page = ref(1);
 
@@ -104,7 +107,7 @@ async function searchMovies(){
         page.value = 1;
         hit = true;
     }
-    console.log(page.value);
+    // console.log(page.value);
     if(keyword.value){
         result = await fetch(`https://api.themoviedb.org/3/search/movie?page=1&api_key=bb5c9a25161603cb7d1205e55e4cbe88&query=${keyword.value}&page=${page.value}`)
         .then((response) => response.json())
@@ -118,12 +121,18 @@ async function searchMovies(){
     });
 
     movies.value =  result.results
+    totalItems.value = result.results.length;
+
+    
     // console.log(movies);
     }
     // keyword.value = '';
 }
 
+
+
 await getNowMovies()
+
 
 
 </script>
@@ -131,6 +140,7 @@ await getNowMovies()
 
 
 <style scoped>
+
 .all {
     background-color: black;
 }
@@ -171,10 +181,12 @@ await getNowMovies()
     border: 1px solid #ff4500;
 }
 .navbtn{
-    background-color: aliceblue;
+    color: aliceblue;
 }
 .navbtn:hover{
-    background-color: aqua;
+    color: aqua;
+    cursor: pointer;
+    transform: scale(1.5);
 }
 .pg{
     color: white;
@@ -182,5 +194,12 @@ await getNowMovies()
     text-align: center;
     padding: 15px 9px 5px 9px;
 }
+
+.disable{
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 
 </style>
