@@ -9,9 +9,10 @@
     </div>
     <h2>{{ movie.original_title }}</h2>
     <p>Released: {{ movie.release_date }}</p>
-    <NuxtLink :to="`/movies/${movie.id}`">
+    <NuxtLink :to="`/movies/${movie.id}`"  >
           <button class="btn">Get more info</button>
     </NuxtLink>
+    
   </div>
 
 </template>
@@ -22,7 +23,10 @@
   //   movie : {}
   // });
 
-  let { movie } = defineProps(['movie']);
+  let { movie,backKeyword } = defineProps(['movie','backKeyword']);
+  
+  
+
 
 </script>
 

@@ -28,26 +28,34 @@
         </div>
 
         <div v-for="movie in movies" :key="movies.id" class="moviecard">
-            <MovieCard :movie="movie"  />
+            <MovieCard :movie="movie"/>
         </div>
+       
     </div>
 </template>
 
 
 
 <script setup>
+import store from "store2"
+
 definePageMeta({
     layout: 'home'
 })
 
+let keyword = ref('');
+let receivedKeyword = ref(null);
+
+
 let result = ref({});
 let movies = ref([]);
-let keyword = ref('');
+
 let hit = false;
 let totalItems = ref();
-let isDisabled = ref(false);
-
 let page = ref(1);
+
+receivedKeyword.value = store.get('receivedKeyword');
+
 
 function increment(){
     page.value++;
@@ -71,6 +79,10 @@ function decrement(){
 
 function searchController(){
     if(keyword.value == ''){
+        hit = false;
+        page.value = 1;
+        store.remove('receivedKeyword');
+        receivedKeyword.value = null;
         getNowMovies()
     }else{
         changeToOne();
@@ -85,6 +97,7 @@ function changeToOne(){
 }
 
 async function getNowMovies(){
+    console.log(" Get Now Movies Called ");
     result = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=bb5c9a25161603cb7d1205e55e4cbe88&page=${page.value}`)
         .then((response) => {
             return response.json();
@@ -103,12 +116,13 @@ async function getNowMovies(){
 }
 
 async function searchMovies(){
-    if(hit == false){
-        page.value = 1;
-        hit = true;
-    }
-    // console.log(page.value);
-    if(keyword.value){
+    hit == false ? hit = true : null;
+    
+    console.log(" Get Search Movies Called ");
+
+    if(keyword.value !== ''){
+        store.set('receivedKeyword', keyword.value)
+
         result = await fetch(`https://api.themoviedb.org/3/search/movie?page=1&api_key=bb5c9a25161603cb7d1205e55e4cbe88&query=${keyword.value}&page=${page.value}`)
         .then((response) => response.json())
 
@@ -129,11 +143,15 @@ async function searchMovies(){
     // keyword.value = '';
 }
 
+console.log(receivedKeyword.value)
 
-
-await getNowMovies()
-
-
+if(receivedKeyword.value !== null){
+    keyword.value = receivedKeyword.value;
+    await searchMovies();
+}else {
+    console.log(receivedKeyword.value);
+    await getNowMovies()
+}
 
 </script>
 

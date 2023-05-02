@@ -30,10 +30,9 @@ useHead({
     title:'Movie Details'
 })
 
-const { movie } = defineProps(['movie'])
+const { movie} = defineProps(['movie'])
 
 let image = `https://image.tmdb.org/t/p/w500//${ movie.backdrop_path}`;
-
 
 </script>
 
