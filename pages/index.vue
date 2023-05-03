@@ -16,14 +16,47 @@
 
             </div>
             <div style="padding-top:1.5vw" >
-                <i class="material-icons navbtn" style="padding:5px 0px" @click="decrement" >keyboard_double_arrow_left</i>
-                <span class="pg" style="font-size: 2em;"> {{ page }} </span>
+                <i 
+                    class="material-icons navbtn" 
+                    style="padding:5px 0px" 
+                    @click="decrement" 
+                    :class="page == 1 ? 'disable' : ''"
+                >keyboard_double_arrow_left</i>
+                <span class="pg" style="font-size: 1.7em;"> {{ page }} </span>
                 <i 
                     class="material-icons navbtn" 
                     style="padding:5px 0px" 
                     @click="increment"
                     :class="totalItems < 20 ? 'disable' : ''"
                 >keyboard_double_arrow_right</i>
+            </div>
+        </div>
+
+        <div v-if="popularMovies.length > 0 && keyword == ''">
+            
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                
+                <div class="carousel-inner">
+                    <h2 class="pg2">Trending</h2>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span @click="index = index-4" class="carousel-control-prev-icon" aria-hidden="true"
+                        :class="index == 0 ? 'disable' : ''"
+                    ></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                    <div class="carousel-item active myContainer">
+                        <MiniMovieCard :movie="popularMovies[index]" class="moviecardMini"/>
+                        <MiniMovieCard :movie="popularMovies[index+1]" class="moviecardMini"/>
+                        <MiniMovieCard :movie="popularMovies[index+2]" class="moviecardMini"/>
+                        <MiniMovieCard :movie="popularMovies[index+3]" class="moviecardMini"/>
+                    </div>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span @click="index = index+4" class="carousel-control-next-icon" aria-hidden="true"
+                    :class="popularMovies.length == index ? 'disable' : ''"
+                    ></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                </div>
             </div>
         </div>
 
@@ -48,7 +81,11 @@ let receivedKeyword = ref(null);
 
 
 let result = ref({});
+let popular = ref({});
+
 let movies = ref([]);
+let popularMovies = ref([]);
+let index = ref(0);
 
 let hit = false;
 let totalItems = ref();
@@ -78,13 +115,15 @@ function decrement(){
 }
 
 function searchController(){
+    // console.log(keyword.value,"key")
     if(keyword.value == ''){
+
         hit = false;
         page.value = 1;
         store.remove('receivedKeyword');
-        receivedKeyword.value = null;
         getNowMovies()
     }else{
+        // popularMovies.value = [];
         changeToOne();
         searchMovies();
     }
@@ -97,6 +136,26 @@ function changeToOne(){
 }
 
 async function getNowMovies(){
+
+
+    popular = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=bb5c9a25161603cb7d1205e55e4cbe88&language=en-US&page=${page.value}`)
+        .then((response) => {
+            return response.json();
+        })
+
+    
+    
+        popular.results.map((x) => {
+            if(x.poster_path == null){
+                x['poster_path'] = 'https://st3.depositphotos.com/1322515/35964/v/600/depositphotos_359648638-stock-illustration-image-available-icon.jpg';
+            }else{
+                x['poster_path'] = 'https://image.tmdb.org/t/p/w500/'+ x.poster_path;
+            }
+    })
+
+
+    popularMovies.value = popular.results;
+    
     console.log(" Get Now Movies Called ");
     result = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=bb5c9a25161603cb7d1205e55e4cbe88&page=${page.value}`)
         .then((response) => {
@@ -107,18 +166,20 @@ async function getNowMovies(){
             if(x.poster_path == null){
                 x['poster_path'] = 'https://st3.depositphotos.com/1322515/35964/v/600/depositphotos_359648638-stock-illustration-image-available-icon.jpg';
             }else{
-                x['poster_path'] = 'https://image.tmdb.org/t/p/w500/'+x.poster_path;
+                x['poster_path'] = 'https://image.tmdb.org/t/p/w500/'+ x.poster_path;
             }
     });
 
     movies.value = result.results;
-    // console.log(movies);
+
+
+    // console.log(`Now Playing: ${movies.value}`);
+    // console.log(`Popular movies: ${popularMovies.value}`);
 }
 
 async function searchMovies(){
+    console.log('Search Movies Called');
     hit == false ? hit = true : null;
-    
-    console.log(" Get Search Movies Called ");
 
     if(keyword.value !== ''){
         store.set('receivedKeyword', keyword.value)
@@ -136,20 +197,13 @@ async function searchMovies(){
 
     movies.value =  result.results
     totalItems.value = result.results.length;
-
-    
-    // console.log(movies);
     }
-    // keyword.value = '';
 }
-
-console.log(receivedKeyword.value)
 
 if(receivedKeyword.value !== null){
     keyword.value = receivedKeyword.value;
     await searchMovies();
 }else {
-    console.log(receivedKeyword.value);
     await getNowMovies()
 }
 
@@ -175,9 +229,24 @@ if(receivedKeyword.value !== null){
     margin-left: 4vw;
     margin-top: 5vw;
     width: 20vw;
-    height: 44vw;
+    height: 37vw;
     text-align: center;
     display: inline-flex;
+}
+.moviecard:hover{
+    transform: scale(1.1);
+}
+.moviecardMini {
+    /* margin-left: 8vw; */
+    margin: auto;
+    /* margin-top: 2vw; */
+    width: 15vw;
+    height: 22vw;
+    text-align: center;
+    /* display: inline-flex; */
+}
+.moviecardMini:hover{
+    transform: scale(1.1);
 }
 
 .btn {
@@ -187,13 +256,19 @@ if(receivedKeyword.value !== null){
     cursor: grab;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    padding: 8px 12px;
+    padding: 9px 15px;
+}
+.btn:hover{
+    background-color: white;
+    color:#ff4500;
+    border: 1px solid #ff4500;
+    transform: scale(1.1);
 }
 
 .searchInput {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    padding: 8px 15px;
+    padding: 9px 15px;
     margin-left: 6vw;
     margin-top: 2vw;
     border: 1px solid #ff4500;
@@ -212,12 +287,34 @@ if(receivedKeyword.value !== null){
     text-align: center;
     padding: 15px 9px 5px 9px;
 }
+.pg2{
+    color: #ff4500;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 2em;
+    text-align:left;
+    font-weight: bold;
+    border: 1px solid #ff4500;
+    border-radius: 10%;
+    width: fit-content;
+    padding: 10px;
+    margin-top: 1em;
+    margin-left: 5em;
+
+}
 
 .disable{
     pointer-events: none;
-    cursor: not-allowed;
     opacity: 0.8;
 }
 
+.myContainer{
+    display: flex;
+    padding: 10pc;
+}
+
+.carousel-inner {
+    background: #080707;
+    border: 5rem solid black;
+}
 
 </style>

@@ -19,15 +19,8 @@
 
 <script setup>
 
-  // let { movie } = defineProps({
-  //   movie : {}
-  // });
-
-  let { movie,backKeyword } = defineProps(['movie','backKeyword']);
+  let { movie } = defineProps(['movie']);
   
-  
-
-
 </script>
 
 <style scoped>
@@ -58,6 +51,9 @@
     font-family: sans-serif;
     visibility: hidden;
     transition: visibility 0s,opacity .5s linear;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 50%;
   }
   .content_img:hover {
     cursor: pointer;
@@ -76,9 +72,10 @@
         padding: 8px 12px;
     }
     h2{
-      font-size: 1.5em;
+      font-size: 1.3em;
       font-weight: bold;
       color: aqua;
+      text-overflow: ellipsis;
     }
     p{
       margin: 0;

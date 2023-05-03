@@ -4,7 +4,7 @@
             <button class="btn">Back</button>
         </NuxtLink>
 
-        <div class="card">
+        <div >
             <div class="saw">
                 <div class="imgblock">
                     <img :src=image>
@@ -26,6 +26,8 @@
 </template>
 
 <script setup>
+import store from 'store2'
+
 useHead({
     title:'Movie Details'
 })
@@ -33,6 +35,8 @@ useHead({
 const { movie} = defineProps(['movie'])
 
 let image = `https://image.tmdb.org/t/p/w500//${ movie.backdrop_path}`;
+
+store.set('movieId',movie.id);
 
 </script>
 
