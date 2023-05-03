@@ -37,7 +37,7 @@
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 
                 <div class="carousel-inner">
-                    <h2 class="pg2">Trending</h2>
+                    <h2 class="pg2">Trending Now</h2>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                     <span @click="index = index-4" class="carousel-control-prev-icon" aria-hidden="true"
                         :class="index == 0 ? 'disable' : ''"
@@ -52,7 +52,7 @@
                     </div>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
                     <span @click="index = index+4" class="carousel-control-next-icon" aria-hidden="true"
-                    :class="popularMovies.length == index ? 'disable' : ''"
+                    :class="index + 4 <= popularMovies.length - 1 ? '' : 'disable'"
                     ></span>
                     <span class="visually-hidden">Next</span>
                 </button>
@@ -293,8 +293,8 @@ if(receivedKeyword.value !== null){
     font-size: 2em;
     text-align:left;
     font-weight: bold;
-    border: 1px solid #ff4500;
-    border-radius: 10%;
+    border: 2px solid #ff4500;
+    /* border-radius: 10%; */
     width: fit-content;
     padding: 10px;
     margin-top: 1em;
@@ -304,7 +304,7 @@ if(receivedKeyword.value !== null){
 
 .disable{
     pointer-events: none;
-    opacity: 0.8;
+    opacity: 0.3;
 }
 
 .myContainer{
