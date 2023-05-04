@@ -80,16 +80,16 @@ if(id !== null){
 p {
     color: white;
     margin: 1px;
-    font-size: 4rem;
+    font-size: 3rem;
     display: initial;
-    padding: 41px;
+    padding: 30px;
     border-radius: 46%;
 }
 
 h1 {
     color: white;
     font-weight: bolder;
-    font-size:4em;
+    font-size:2.5rem;
 }
 
 div{

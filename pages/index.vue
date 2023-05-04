@@ -96,7 +96,6 @@ receivedKeyword.value = store.get('receivedKeyword');
 
 function increment(){
     page.value++;
-    
     if(hit == true){
         searchMovies()
     }else{
@@ -105,6 +104,7 @@ function increment(){
 }
 function decrement(){
     if(page.value > 1){
+        
         page.value--;
         if(hit == true){
             searchMovies()
