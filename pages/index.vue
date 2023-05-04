@@ -38,7 +38,7 @@
                 
                 <div class="carousel-inner">
                     <h2 class="pg2">Trending Now</h2>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                     <span @click="index = index-4" class="carousel-control-prev-icon" aria-hidden="true"
                         :class="index == 0 ? 'disable' : ''"
                     ></span>
@@ -50,7 +50,7 @@
                         <MiniMovieCard :movie="popularMovies[index+2]" class="moviecardMini"/>
                         <MiniMovieCard :movie="popularMovies[index+3]" class="moviecardMini"/>
                     </div>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
                     <span @click="index = index+4" class="carousel-control-next-icon" aria-hidden="true"
                     :class="index + 4 <= popularMovies.length - 1 ? '' : 'disable'"
                     ></span>
@@ -289,10 +289,11 @@ if(receivedKeyword.value !== null){
 }
 .pg2{
     color: #ff4500;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+    font-family: 'Sigmar', cursive;
     font-size: 2em;
     text-align:left;
-    font-weight: bold;
+    /* font-weight: bold; */
     border: 2px solid #ff4500;
     /* border-radius: 10%; */
     width: fit-content;
@@ -315,6 +316,11 @@ if(receivedKeyword.value !== null){
 .carousel-inner {
     background: #080707;
     border: 5rem solid black;
+}
+
+.slidebtn:hover{
+    background-color: white;
+    color: black;
 }
 
 </style>

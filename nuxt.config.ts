@@ -9,6 +9,8 @@ export default defineNuxtConfig({
             ],
             link: [
                 {rel:'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons'},
+                {rel:'stylesheet', href:"https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"},
+                {rel:'stylesheet', href:"https://fonts.googleapis.com/css2?family=Sigmar&family=Vina+Sans&display=swap" },
                 {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'}
                 
             ],

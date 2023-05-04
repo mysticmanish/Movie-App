@@ -35,6 +35,11 @@ useHead({
 const { movie} = defineProps(['movie'])
 
 let image = `https://image.tmdb.org/t/p/w500//${ movie.backdrop_path}`;
+if(movie.backdrop_path == null){
+    image = 'https://st3.depositphotos.com/1322515/35964/v/600/depositphotos_359648638-stock-illustration-image-available-icon.jpg';
+}
+
+
 
 store.set('movieId',movie.id);
 

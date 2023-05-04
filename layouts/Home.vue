@@ -9,8 +9,15 @@
         >
             <div style="position: absolute;">
                 <div class="headclass">
-                    <p>Movie</p>
-                    <h1 v-if="id != null">Now Streaming: {{ result.original_title }}</h1>
+                    <p>
+                        <i class="material-symbols-outlined">movie</i>
+                        Movie
+                    </p>
+                    <h1 v-if="id != null">
+                        <NuxtLink :to="`/movies/${id}`" class="link" >
+                            Now Streaming: {{ result.original_title }}
+                        </NuxtLink>
+                    </h1>
                 </div>
             </div>
         </header>
@@ -78,12 +85,16 @@ if(id !== null){
     margin-left: 6vw;
 }
 p {
+    font-family: 'Sigmar', cursive;
     color: white;
     margin: 1px;
     font-size: 3rem;
     display: initial;
-    padding: 30px;
+    padding: 25px;
     border-radius: 46%;
+}
+p:hover{
+    color: #ff4500;
 }
 
 h1 {
@@ -95,4 +106,20 @@ h1 {
 div{
     display: block;
 }
+
+.material-symbols-outlined {
+    font-size: 2.4rem;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 600,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.link:hover{
+    text-decoration: underline;
+    color: #ff4500;
+
+}
+
 </style>
