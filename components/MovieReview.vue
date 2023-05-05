@@ -1,6 +1,24 @@
 <template>
     <div v-if="reviews.length != 0" class="container">
-        <p class="pg2">Reviews</p>
+        <div class="reviewBar">
+            <p class="pg2">Reviews</p>
+            <div style="padding-top:2.3vw; padding-left: 3vw;" >
+                    <i 
+                        class="material-icons navbtn" 
+                        style="padding:5px 0px" 
+                        @click="decrement" 
+                        :class="page == 1 ? 'disable' : ''"
+                    >keyboard_double_arrow_left</i>
+                    <span class="pg" style="font-size: 1.7em;"> {{ page }} </span>
+                    <i 
+                        class="material-icons navbtn" 
+                        style="padding:5px 0px" 
+                        @click="increment"
+                        :class="reviews.length <= 10 ? 'disable' : ''"
+                    >keyboard_double_arrow_right</i>
+            </div>
+        </div>
+
         <div v-for="review in reviews" class="card">
             <div>
                 <p class="Rname">Written by : {{ review.author }}</p>
@@ -23,21 +41,34 @@
     let page = ref(1);
 
 
-    let reviewsUrl = `https://api.themoviedb.org/3/movie/${id.id}/reviews?api_key=bb5c9a25161603cb7d1205e55e4cbe88&language=en-US&page=${page.value}`
+    async function getReviews(){
+        let reviewsUrl = `https://api.themoviedb.org/3/movie/${id.id}/reviews?api_key=bb5c9a25161603cb7d1205e55e4cbe88&language=en-US&page=${page.value}`
 
 
-    let reviewResult = await fetch(reviewsUrl)
+        let reviewResult = await fetch(reviewsUrl)
         .then((response) => response.json())
         
-    reviews.value = await reviewResult.results;
+        reviews.value = await reviewResult.results;
+    }
+    function increment(){
+        page.value++;
+        getReviews()
+    }
+    function decrement(){
+        page.value--;
+        getReviews()    
+    }
 
-
+    await getReviews();
 
 </script>
 
 <style scoped>
 .container{
     display: block;
+}
+.reviewBar{
+    display: flex;
 }
 .card{
     height: 30rem;
@@ -77,18 +108,32 @@
 
 .pg2{
     color: #ff4500;
-    /* font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
     font-family: 'Sigmar', cursive;
     font-size: 2em;
     text-align:left;
-    /* font-weight: bold; */
     border: 2px solid #ff4500;
-    /* border-radius: 10%; */
     width: fit-content;
     padding: 10px;
     margin-top: 1em;
     margin-left: 5em;
-
 }
 
+.navbtn{
+    color: aliceblue;
+}
+.navbtn:hover{
+    color: aqua;
+    cursor: pointer;
+    transform: scale(1.5);
+}
+.disable{
+    pointer-events: none;
+    opacity: 0.3;
+}
+.pg{
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    padding: 15px 9px 5px 9px;
+}
 </style>

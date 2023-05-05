@@ -3,17 +3,16 @@
     <div class="all">
         <div class="searchBar">
             <div style="width: 92%">
-                
-                <input 
+                <div class="innerSearchBar">
+                    <input 
                     type="text" 
                     v-model="keyword"
                     class="searchInput" 
                     placeholder="Enter movie name" 
                     @keyup=searchController()
-                />
-
-                <button class="btn" @click="searchController()"> Search</button>
-
+                    />
+                    <button class="myBtn" @click="searchController()"> Search</button>
+                </div>
             </div>
             <div style="padding-top:1.5vw" >
                 <i 
@@ -38,10 +37,10 @@
                 
                 <div class="carousel-inner">
                     <h2 class="pg2">Trending Now</h2>
-                    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span @click="index = index-4" class="carousel-control-prev-icon" aria-hidden="true"
-                        :class="index == 0 ? 'disable' : ''"
-                    ></span>
+                    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev"
+                    :class="index == 0 ? 'disable' : ''"
+                    >
+                    <span @click="index = index-4" class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
                     <div class="carousel-item active myContainer">
@@ -50,10 +49,10 @@
                         <MiniMovieCard :movie="popularMovies[index+2]" class="moviecardMini"/>
                         <MiniMovieCard :movie="popularMovies[index+3]" class="moviecardMini"/>
                     </div>
-                    <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span @click="index = index+4" class="carousel-control-next-icon" aria-hidden="true"
+                    <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next"
                     :class="index + 4 <= popularMovies.length - 1 ? '' : 'disable'"
-                    ></span>
+                    >
+                    <span @click="index = index+4" class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
                 </div>
@@ -226,10 +225,8 @@ if(receivedKeyword.value !== null){
 }
 
 .moviecard {
-    margin-left: 4vw;
-    margin-top: 5vw;
-    width: 20vw;
-    height: 37vw;
+    margin-left: 3vw;
+    margin-top: 4vw;
     text-align: center;
     display: inline-flex;
 }
@@ -249,29 +246,28 @@ if(receivedKeyword.value !== null){
     transform: scale(1.1);
 }
 
-.btn {
+.myBtn {
+    font-size: 1.2rem;
     background-color: #ff4500;
     color: white;
-    border: 1px solid #ff4500;
     cursor: grab;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    padding: 9px 15px;
+    padding: 6px 12px 7px 18px;
 }
-.btn:hover{
-    background-color: white;
-    color:#ff4500;
-    border: 1px solid #ff4500;
+.myBtn:hover{
     transform: scale(1.1);
 }
 
+.innerSearchBar{
+    margin-left: 6vw;
+    margin-top: 2vw;
+}
 .searchInput {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     padding: 9px 15px;
-    margin-left: 6vw;
-    margin-top: 2vw;
-    border: 1px solid #ff4500;
+    /* border: 1px solid #ff4500; */
 }
 .navbtn{
     color: aliceblue;
@@ -305,6 +301,7 @@ if(receivedKeyword.value !== null){
 
 .disable{
     pointer-events: none;
+    display: none;
     opacity: 0.3;
 }
 
