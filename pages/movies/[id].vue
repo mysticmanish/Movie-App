@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="myContainer">
         <MovieDetails :movie="Singlemovie" />
-        <MovieReview :id="id" />
+        <!-- <MovieReview :id="id" /> -->
     </div>
 </template>
 

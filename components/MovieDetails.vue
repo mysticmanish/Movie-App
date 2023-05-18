@@ -4,14 +4,13 @@
             <button class="btn">Back</button>
         </NuxtLink>
 
-        <div >
+        <div class="About">
             <div class="saw">
                 <div class="imgblock">
                     <img :src=image>
                 </div>
                 <div class="des" >
                     <h1>{{movie.original_title}}</h1>
-                    <h2>Tagline:</h2>
                     <p>Status: {{ movie.status }}</p>
                     <p>Released: {{ movie.release_date }}</p>
                     <p>Budget: {{ movie.budget }}</p>
@@ -21,6 +20,10 @@
                     <p class="overview" style="font-size: 1.3rem;">{{ movie.overview }}</p>
                 </div>
             </div>
+            <MovieReview :id="movie.id" />
+        </div>
+        <div class="moviesContainer">
+            <SimilarMovie :id="movie.id" />
         </div>
     </div>
 </template>
@@ -49,6 +52,12 @@ store.set('movieId',movie.id);
     .v-application {
     background-color: #00a86b;
     }
+
+    .About{
+        display: flex;
+        width: 100%;
+        height: 55rem;
+    }
     .btn{
         background-color: #ff4500;
         color:white;
@@ -60,7 +69,8 @@ store.set('movieId',movie.id);
         border-radius: 8px;
     }
     .imgblock{
-        width: 80%;
+        width: 50%;
+        height: 95%;
     }
     img{
         width: 100%;
@@ -70,13 +80,15 @@ store.set('movieId',movie.id);
         transform: scale(1.1);
     }
     .saw{
-        display: inline-flex;
+        display:flex;
         margin-top: 5vw;
         margin:5vw;
+        width: 70%;
     }
 
     .des{
-        padding: 3vw;
+        width: 50%;
+        padding: 0 3vw;
         text-align: left;
         background-color: black;
     }
@@ -99,6 +111,10 @@ store.set('movieId',movie.id);
         color: aliceblue;
         display: block;
         margin:1em
+    }
+
+    .moviesContainer{
+        width:100%;
     }
 
 </style>

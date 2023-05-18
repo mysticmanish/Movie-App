@@ -2,7 +2,7 @@
     <div v-if="reviews.length != 0" class="container">
         <div class="reviewBar">
             <p class="pg2">Reviews</p>
-            <div style="padding-top:2.3vw; padding-left: 3vw;" >
+            <div style="padding-top:0vw; padding-left: 2vw;" >
                     <i 
                         class="material-icons navbtn" 
                         style="padding:5px 0px" 
@@ -18,13 +18,15 @@
                     >keyboard_double_arrow_right</i>
             </div>
         </div>
-
-        <div v-for="review in reviews" class="card">
+        <div class="reviewsContainer">
+            <div v-for="review in reviews" class="card">
             <div>
                 <p class="Rname">Written by : {{ review.author }}</p>
                 <div class="content">{{ review.content }}</div>
             </div>
+            </div>
         </div>
+        
  
     </div>
     <div v-else="reviews.length == 0" class="container">
@@ -66,16 +68,20 @@
 <style scoped>
 .container{
     display: block;
+    width:30%;
+    margin-top: 5vw;
 }
 .reviewBar{
     display: flex;
+    width:max-content
+
 }
 .card{
     height: 30rem;
     width: 20rem;
     display:inline-flex;
     margin-left: 4rem;
-    margin-top: 5rem;
+    margin-top: 3rem;
     text-align: center;
     border-radius: 5%;
     background-color: #1c1919;
@@ -111,10 +117,7 @@
     font-family: 'Sigmar', cursive;
     font-size: 2em;
     text-align:left;
-    border: 2px solid #ff4500;
     width: fit-content;
-    padding: 10px;
-    margin-top: 1em;
     margin-left: 5em;
 }
 
@@ -135,5 +138,14 @@
     font-size: 2em;
     text-align: center;
     padding: 15px 9px 5px 9px;
+}
+
+.reviewsContainer{
+    /* margin-top: 1rem; */
+    height: 80%;
+    overflow-y: scroll;
+}
+.reviewsContainer::-webkit-scrollbar{
+    display: none;
 }
 </style>

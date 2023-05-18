@@ -15,7 +15,7 @@
                     </p>
                     <h1 v-if="id != null">
                         <NuxtLink :to="`/movies/${id}`" class="link" >
-                            Now Streaming: {{ result.original_title }}
+                            Now Streaming: {{ movieTitle }}
                         </NuxtLink>
                     </h1>
                 </div>
@@ -34,6 +34,7 @@ import store from 'store2'
 
 let result = ref({});
 let image = ref('');
+let movieTitle = ref('');
 
 let id = ref();
 id = store.get('movieId');
@@ -51,6 +52,7 @@ if(id !== null){
 
         // console.log(`Poster path of single movie: ${result.poster_path}`);
         image.value = result.backdrop_path;
+        movieTitle.value = result.original_title;
         console.log('backdrop path',result.backdrop_path);
         console.log(image.value);
     }
